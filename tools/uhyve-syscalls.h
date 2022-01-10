@@ -52,6 +52,7 @@ typedef enum {
 	UHYVE_PORT_GETDENTS		= 0x529,
 	UHYVE_PORT_DUP2			= 0X530,
 	UHYVE_PORT_PIPE			= 0X531,
+	UHYVE_PORT_RENAME               = 0x533
 	UHYVE_PORT_NEWFSTATAT	= 0X532
 } uhyve_syscall_t;
 

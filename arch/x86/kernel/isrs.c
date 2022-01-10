@@ -207,7 +207,7 @@ void isrs_install(void)
  * This is a simple string array. It contains the message that
  * corresponds to each and every exception. We get the correct
  * message by accessing it like this:
- * exception_message[interrupt_number]
+ * exception_message[interrupt_number]
  */
 static const char *exception_messages[] = {
 	"Division By Zero", "Debug", "Non Maskable Interrupt",
@@ -625,7 +625,10 @@ void syscall_handler(struct state *s)
 			s->rax = sys_chdir((const char *)s->rdi);
 			break;
 #endif
-
+		case 82:
+			/* rename */
+			s->rax = sys_rename((const char *)s->rdi,(const char *)s->rdi, s->rsi);
+			break;
 #ifndef DISABLE_SYS_MKDIR
 		case 83:
 			/* mkdir */
@@ -646,8 +649,6 @@ void syscall_handler(struct state *s)
 			s->rax = sys_creat((const char *)s->rdi, s->rsi);
 			break;
 #endif
-
-#ifndef DISABLE_SYS_UNLINK
 		case 87:
 			/* unlink */
 			s->rax = sys_unlink((const char *)s->rdi);
@@ -955,4 +956,3 @@ static void arch_fault_handler(struct state *s)
 
 	//do_abort();
 	sys_exit(-EFAULT);
-}
